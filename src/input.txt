@@ -1,0 +1,37 @@
+Turing Machine
+Please enter the alphabet(with space _ at the end):
+>>>01+_
+-------------------------------------------------------------------------
+Please enter the number of states(without stop state):
+>>>5
+-------------------------------------------------------------------------
+Transitions:
+STATE OLD_VALUE_UNDER_THE_HEAD NEW_VALUE_UNDER_THE_HEAD SHIFT NEW_STATE
+States(starts from 0): 1, 2, ..., 0 (stop)
+Values under the head:  (space) d 2 | ~ s 0 - + ...
+Shifts: > - right shift, < - left shift, . - no shift
+Example: 0 a b > 1
+Please enter the transitions:
+>>>
+1 0 1 < 1
+1 1 0 < 2
+1 +   > 5
+2 0 0 < 2
+2 1 1 < 2
+2 + + < 3
+3 0 1 > 4
+3 1 0 < 3
+3   1 > 4
+4 0 0 > 4
+4 1 1 > 4
+4 + + > 4
+4     < 1
+5 1   > 5
+5     . 0
+-------------------------------------------------------------------------
+Please set the starting tape:
+>>>1011+11
+-------------------------------------------------------------------------
+Please enter the starting point:
+>>>7
+-------------------------------------------------------------------------
