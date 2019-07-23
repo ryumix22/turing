@@ -5,7 +5,6 @@ import java.util.Scanner;
 
 public class turingAlg {
     public static void main(String[] args) throws IOException {
-        int steps = 0;
         int currentState = 0;
         char currentValue;
         String[][] matrix;
@@ -13,7 +12,7 @@ public class turingAlg {
         char[] values = new char[0];
         char[] charTape = new char[0];
         char[] tape = new char[200];
-        FileReader file = new FileReader("src/input.txt");
+        FileReader file = new FileReader("files//input.txt");
         Scanner scan = new Scanner(file);
         String s = scan.nextLine();
         StringBuilder transitions = new StringBuilder("");
@@ -42,8 +41,6 @@ public class turingAlg {
                 } else if (a == 5) {
                     startingPoint = Integer.parseInt(s.substring(3)) - 1;
                     a++;
-                } else if (a == 6) {
-                    steps = Integer.parseInt(s.substring(3));
                 }
             }
             s = scan.nextLine();
@@ -71,18 +68,7 @@ public class turingAlg {
         int valueNumb;
         int currentPosition = startingPoint + 100;
         char[] command;
-        int stepsCounter = 1;
-        if (steps == -1) {
-            while (currentState != -1) {
-                currentValue = tape[currentPosition];
-                valueNumb = valuess.indexOf(currentValue);
-                command = matrix[valueNumb][currentState].toCharArray();
-                tape[currentPosition] = command[0];
-                if (command[2] == '>') currentPosition++;
-                else if (command[2] == '<') currentPosition--;
-                currentState = Character.getNumericValue(command[4]) - 1;
-            }
-        } else while (currentState != -1 || stepsCounter != steps) {
+        while (currentState != -1) {
             currentValue = tape[currentPosition];
             valueNumb = valuess.indexOf(currentValue);
             command = matrix[valueNumb][currentState].toCharArray();
@@ -90,10 +76,9 @@ public class turingAlg {
             if (command[2] == '>') currentPosition++;
             else if (command[2] == '<') currentPosition--;
             currentState = Character.getNumericValue(command[4]) - 1;
-            stepsCounter++;
         }
         //System.out.println(tape);
-        File result = new File("src/result.txt");
+        File result = new File("files//result.txt");
         result.createNewFile();
         FileWriter writer = new FileWriter(result);
         writer.write(tape);
