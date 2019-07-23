@@ -1,9 +1,11 @@
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Scanner;
 
 public class turingAlg {
     public static void main(String[] args) throws IOException {
+        int steps = 0;
         int currentState = 0;
         char currentValue;
         String[][] matrix;
@@ -17,7 +19,6 @@ public class turingAlg {
         StringBuilder transitions = new StringBuilder("");
         String[] trans;
         int a = 1;
-        int b = 1;
         int numberOfStates = 0;
         while (scan.hasNextLine()) {
             if (s.matches("(>>>).*")) {
@@ -37,10 +38,12 @@ public class turingAlg {
                     //System.out.print(transitions);
                 } else if (a == 4) {
                     charTape = s.substring(3).toCharArray();
-                    currentValue = charTape[0];
                     a++;
                 } else if (a == 5) {
                     startingPoint = Integer.parseInt(s.substring(3)) - 1;
+                    a++;
+                } else if (a == 6) {
+                    steps = Integer.parseInt(s.substring(3));
                 }
             }
             s = scan.nextLine();
@@ -68,7 +71,18 @@ public class turingAlg {
         int valueNumb;
         int currentPosition = startingPoint + 100;
         char[] command;
-        while (currentState != -1) {
+        int stepsCounter = 1;
+        if (steps == -1) {
+            while (currentState != -1) {
+                currentValue = tape[currentPosition];
+                valueNumb = valuess.indexOf(currentValue);
+                command = matrix[valueNumb][currentState].toCharArray();
+                tape[currentPosition] = command[0];
+                if (command[2] == '>') currentPosition++;
+                else if (command[2] == '<') currentPosition--;
+                currentState = Character.getNumericValue(command[4]) - 1;
+            }
+        } else while (currentState != -1 || stepsCounter != steps) {
             currentValue = tape[currentPosition];
             valueNumb = valuess.indexOf(currentValue);
             command = matrix[valueNumb][currentState].toCharArray();
@@ -76,6 +90,7 @@ public class turingAlg {
             if (command[2] == '>') currentPosition++;
             else if (command[2] == '<') currentPosition--;
             currentState = Character.getNumericValue(command[4]) - 1;
+            stepsCounter++;
         }
         //System.out.println(tape);
         File result = new File("src/result.txt");
